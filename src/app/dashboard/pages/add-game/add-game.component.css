@@ -31,11 +31,25 @@ input {
     border: none;
     padding: .5rem 1rem;
     border-radius: 1rem;
+    cursor: pointer;
 }
 
 .add {
     background-color: rgb(0, 85, 0);
     color:white;
+}
+
+.disabled {
+    cursor: default;
+    background-color: #7c7c7c;
+}
+
+.error {
+    border: 1px solid rgb(100, 0, 0);
+}
+
+.validation-error {
+    color: rgb(100, 0, 0);
 }
 
 @media only screen and (max-width: 600px) {
