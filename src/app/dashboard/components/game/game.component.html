@@ -1,14 +1,17 @@
 <div class="container">
-    <img class="image" height="250" src="" alt="game image">
+    <img class="image" height="250" [src]="game.imageUri" alt="game image">
     <div class="game-info">
         <span>
             <strong>Game Name: </strong>
+            {{game.name}}
         </span>
         <span>
             <strong>Bundle: </strong>
+            {{game.bundle}}
         </span>
         <span>
             <strong>Owner: </strong>
+            {{game.owner}}
         </span>
     </div>
     <button class="button delete">Delete</button>
