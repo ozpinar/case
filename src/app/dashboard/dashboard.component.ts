@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, startWith, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map, startWith, Subject, takeUntil } from 'rxjs';
 import { Game } from './models/Game';
 import { GameService } from './services/game.service';
 
@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(
           takeUntil(this.destroyAction$),
           startWith(''),
-          debounceTime(400),
           distinctUntilChanged(),
           map(value => this._filter(value))
       ).subscribe(val => this.filteredGames = val);
