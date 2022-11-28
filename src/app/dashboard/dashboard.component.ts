@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   deleteGame(game: Game) {
+    if(!confirm("Are you sure you that want to delete this game?")) return;
     this.games = this.games.filter(x => x.id !== game.id);
     this.filteredGames = this.filteredGames.filter(x => x.id !== game.id);
     this.gameService.deleteGame(game);
