@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { GameService } from '../../services/game.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { GameService } from '../../services/game.service';
 })
 export class AddGameComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private gameService: GameService, private router: Router) { }
+  constructor(private fb: FormBuilder, private gameService: GameService, private router: Router, private toastr: ToastrService) { }
 
   addGameForm: FormGroup;
 
@@ -45,6 +46,7 @@ export class AddGameComponent implements OnInit {
       id: Math.floor((Math.random() * 1000))
     })
     this.gameService.saveGame(this.addGameForm.value);
+    this.toastr.success('Game has been saved successfully.')
     this.router.navigateByUrl('/');
   }
 }
