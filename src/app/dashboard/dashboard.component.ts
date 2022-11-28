@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, startWith, Subject, takeUntil } from 'rxjs';
 import { Game } from './models/Game';
 import { GameService } from './services/game.service';
@@ -11,7 +11,7 @@ import { GameService } from './services/game.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  constructor(private gameService: GameService, private fb: FormBuilder) { }
+  constructor(private gameService: GameService) { }
   
   destroyAction$ = new Subject(); 
   searchControl = new FormControl();
@@ -19,12 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   games: Game[] = [];
 
   ngOnInit(): void {
-    this.gameService.addedGame$.pipe(
-      takeUntil(this.destroyAction$)
-    ).subscribe(game => {
-      this.games.push(game);
-    })
-
+    this.games = this.gameService.getGames();
     this.searchControl.valueChanges
       .pipe(
           takeUntil(this.destroyAction$),
@@ -44,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   deleteGame(game: Game) {
     this.games = this.games.filter(x => x.id !== game.id);
     this.filteredGames = this.filteredGames.filter(x => x.id !== game.id);
+    this.gameService.deleteGame(game);
   }
 
   ngOnDestroy(): void {

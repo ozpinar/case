@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
 import { Game } from '../models/Game';
 
 @Injectable({
@@ -9,10 +8,19 @@ export class GameService {
 
   constructor() { }
 
-  private addedGameSource = new ReplaySubject<Game>(1)
-  addedGame$ = this.addedGameSource.asObservable();
-
   saveGame(game: Game) {
-    this.addedGameSource.next(game);
+    const games = JSON.parse(localStorage.getItem('games')!) || [];
+    games.push(game);
+    localStorage.setItem('games', JSON.stringify(games));
+  }
+
+  deleteGame(game: Game){
+    let games: Game[] = JSON.parse(localStorage.getItem('games')!) || [];
+    games = games.filter(x => x.id !== game.id);
+    localStorage.setItem('games', JSON.stringify(games));
+  }
+
+  getGames() {
+    return JSON.parse(localStorage.getItem('games')!);
   }
 }

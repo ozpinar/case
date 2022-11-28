@@ -21,10 +21,10 @@
         <div class="field">
             <label for="owner">Owner</label>
             <input [class.error]="addGameForm.get('owner')?.errors && addGameForm.get('owner')?.touched" formControlName="owner" name="owner" type="text">
-            <span class="validation-error" *ngIf="addGameForm.get('owner')?.hasError('required') && addGameForm.get('bundle')?.touched">
+            <span class="validation-error" *ngIf="addGameForm.get('owner')?.hasError('required') && addGameForm.get('owner')?.touched">
                 Please add a game owner
             </span>
-            <span class="validation-error" *ngIf="addGameForm.get('owner')?.hasError('email') && addGameForm.get('bundle')?.touched">
+            <span class="validation-error" *ngIf="addGameForm.get('owner')?.hasError('email') && addGameForm.get('owner')?.touched">
                 Please add a valid game owner
             </span>
         </div>
