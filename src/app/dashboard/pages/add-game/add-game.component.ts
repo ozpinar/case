@@ -20,6 +20,7 @@ export class AddGameComponent implements OnInit {
 
   initializeForm() {
     this.addGameForm = this.fb.group({
+      id: [''],
       name: ['', Validators.required],
       bundle: ['', [Validators.required, Validators.pattern(/^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$/)]],
       owner: ['', [Validators.required, Validators.email]],
@@ -40,6 +41,9 @@ export class AddGameComponent implements OnInit {
   }
 
   saveGame() {
+    this.addGameForm.patchValue({
+      id: Math.floor((Math.random() * 1000))
+    })
     this.gameService.saveGame(this.addGameForm.value);
     this.router.navigateByUrl('/');
   }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, Observable, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, map, startWith, Subject, takeUntil } from 'rxjs';
 import { Game } from './models/Game';
 import { GameService } from './services/game.service';
 
@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   
   destroyAction$ = new Subject(); 
   searchControl = new FormControl();
-  filteredGames$: Observable<Game[]>;
+  filteredGames: Game[];
   games: Game[] = [];
 
   ngOnInit(): void {
@@ -25,20 +25,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.games.push(game);
     })
 
-    this.filteredGames$ = this.searchControl.valueChanges
+    this.searchControl.valueChanges
       .pipe(
           takeUntil(this.destroyAction$),
           startWith(''),
           debounceTime(400),
           distinctUntilChanged(),
           map(value => this._filter(value))
-      );
+      ).subscribe(val => this.filteredGames = val);
   }
 
 
   private _filter(value: string): Game[] {
     const filterValue = value.toLowerCase();
     return this.games.filter(game => game.name.toLowerCase().includes(filterValue));
+  }
+
+  deleteGame(game: Game) {
+    this.games = this.games.filter(x => x.id !== game.id);
+    this.filteredGames = this.filteredGames.filter(x => x.id !== game.id);
   }
 
   ngOnDestroy(): void {
