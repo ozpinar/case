@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, map, Observable, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Game } from './models/Game';
 import { GameService } from './services/game.service';
 
@@ -10,15 +11,12 @@ import { GameService } from './services/game.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private fb: FormBuilder) { }
   
   destroyAction$ = new Subject(); 
-
-  games: Game[] = [
-    {name: 'Game1', bundle: 'bundle1', owner: 'owner1', image: '#'},
-    {name: 'Game2', bundle: 'bundle2', owner: 'owner2', image: '#'},
-    {name: 'Game3', bundle: 'bundle3', owner: 'owner3', image: '#'}
-  ]
+  searchControl = new FormControl();
+  filteredGames$: Observable<Game[]>;
+  games: Game[] = [];
 
   ngOnInit(): void {
     this.gameService.addedGame$.pipe(
@@ -26,6 +24,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ).subscribe(game => {
       this.games.push(game);
     })
+
+    this.filteredGames$ = this.searchControl.valueChanges
+      .pipe(
+          takeUntil(this.destroyAction$),
+          startWith(''),
+          debounceTime(400),
+          distinctUntilChanged(),
+          map(value => this._filter(value))
+      );
+  }
+
+
+  private _filter(value: string): Game[] {
+    const filterValue = value.toLowerCase();
+    return this.games.filter(game => game.name.toLowerCase().includes(filterValue));
   }
 
   ngOnDestroy(): void {

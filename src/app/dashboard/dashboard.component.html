@@ -1,12 +1,12 @@
 <div class="container">
     <h1 class="title">Game List</h1>
     <div class="controls">
-        <form>
-            <input class="search" placeholder="Search a game..." type="text">
-        </form>
+        <input [formControl]="searchControl" class="search" placeholder="Search a game..." type="text">
         <button routerLink="/add-game" class="button add">+ Add a game</button>
     </div>
     <div class="games">
-        <app-game *ngFor="let game of games" [game]="game"></app-game>
+        <app-game *ngFor="let game of filteredGames$ | async" [game]="game"></app-game>
+        <h2 *ngIf="!games.length">There are no games saved yet.</h2>
+        <h2 *ngIf="!(filteredGames$ | async)?.length && games.length">No games found</h2>
     </div>
 </div>

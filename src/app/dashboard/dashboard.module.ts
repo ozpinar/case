@@ -16,7 +16,6 @@ import { GameComponent } from './components/game/game.component';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule  ]
 })
 export class DashboardModule { }
