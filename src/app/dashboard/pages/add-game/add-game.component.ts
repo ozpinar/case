@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { GameService } from '../../services/game.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { GameService } from '../../services/game.service';
 })
 export class AddGameComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private gameService: GameService) { }
+  constructor(private fb: FormBuilder, private gameService: GameService, private router: Router) { }
 
   addGameForm: FormGroup;
 
@@ -40,5 +41,6 @@ export class AddGameComponent implements OnInit {
 
   saveGame() {
     this.gameService.saveGame(this.addGameForm.value);
+    this.router.navigateByUrl('/');
   }
 }

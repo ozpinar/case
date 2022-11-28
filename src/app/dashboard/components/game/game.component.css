@@ -5,7 +5,7 @@
     padding: 1rem;
     gap: .5rem;
     width: 250px;
-    height: 300px;
+    height: 350px;
     background-color: white;
     filter: drop-shadow(0px 0px 2px #b6b5b5);
 }
@@ -16,6 +16,7 @@
 }
 
 .button {
+    cursor: pointer;
     align-self: flex-end;
     border: none;
     padding: .5rem 1rem;
@@ -29,4 +30,7 @@
 
 .image {
     border-radius: .5rem;
+    height: 60%;
+    width: 100%;
+    object-fit: cover;
 }

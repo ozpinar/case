@@ -31,6 +31,7 @@
     border: none;
     padding: .5rem 1rem;
     border-radius: 1rem;
+    cursor: pointer;
 }
 
 .add {

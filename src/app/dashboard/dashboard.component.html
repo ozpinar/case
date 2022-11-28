@@ -4,7 +4,7 @@
         <form>
             <input class="search" placeholder="Search a game..." type="text">
         </form>
-        <button class="button add">+ Add a game</button>
+        <button routerLink="/add-game" class="button add">+ Add a game</button>
     </div>
     <div class="games">
         <app-game *ngFor="let game of games" [game]="game"></app-game>

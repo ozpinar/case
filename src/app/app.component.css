@@ -7,4 +7,5 @@ header {
 
 .title { 
     line-height: 50px;
+    cursor: pointer;
 }
