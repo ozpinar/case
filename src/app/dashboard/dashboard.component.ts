@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   games: Game[] = [];
 
   ngOnInit(): void {
-    this.games = this.gameService.getGames();
+    this.games = this.gameService.getGames() || [];
     this.searchControl.valueChanges
       .pipe(
           takeUntil(this.destroyAction$),
